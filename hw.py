@@ -91,10 +91,26 @@ class Student:
 
     @property
     def subjects_grades(self):
+        """return grades with all subjects
+            >>> r1 = Student('Wef', 'Eef', 'Ber')
+            >>> print(r1.subjects_grades)
+            {'subject': [], 'english': [], 'math': [], 'physics': [], 'chemistry': [], 'history': []}
+
+            >>> r1.add_grade('math', 3)
+            >>> r1.add_grade('math', 3)
+            >>> print(r1.subjects_grades)
+            {'subject': [], 'english': [], 'math': [3, 3], 'physics': [], 'chemistry': [], 'history': []}
+        """
         return self._subjects_grades
 
     @valid_value(6, 1)
     def add_grade(self, subject, value: int):
+        """Add grade in list grades for subjects, and valid min, max values(1,6)
+            >>> r1 = Student('Wef', 'Eef', 'Ber')
+            >>> r1.add_grade('chemistry', 5)
+            >>> print(r1.subjects_grades)
+            {'subject': ['ergerg'], 'english': [], 'math': [3], 'physics': [3], 'chemistry': [5], 'history': []}
+        """
         self._subjects_grades[subject].append(value)
 
     @valid_value(101, -1)
@@ -103,23 +119,50 @@ class Student:
 
     @property
     def subjects_tests(self):
-        print(id(self.subjects_grades))
-        print(id(self._subjects_tests))
+        """wefwef
+        >>> r1 = Student('Hf', 'Fdx', 'Wef')
+        >>> r1.subjects_tests
+        {'subject': [], 'english': [], 'math': [], 'physics': [], 'chemistry': [], 'history': []}
+        >>> r1.add_taste('history', 100)
+        >>> r1.add_taste('history', 55)
+        >>> r1.subjects_tests
+        {'subject': [], 'english': [], 'math': [], 'physics': [], 'chemistry': [], 'history': [100, 55]}
+        """
         return self._subjects_tests
 
     def average_test(self, subject):
         return statistics.mean(self._subjects_tests[subject])
 
     def average_grades(self):
+        """wefwef
+        >>> r1 = Student('Hf', 'Fdx', 'Wef')
+        >>> r1.add_grade('chemistry', 5)
+        >>> r1.average_grades()
+        5
+        >>> r1.add_grade('chemistry', 3)
+        >>> r1.average_grades()
+        4
+        >>> r1.add_grade('math', 2)
+        >>> r1.average_grades()
+        3.3333333333333335
+        >>> r1.add_grade('chemistry', 5)
+        >>> r1.average_grades()
+        3.75
+        """
         res = []
         for i in self._subjects_grades.values():
-            print(i)
             if i:
-                res.append(statistics.mean(i))
+                for item in i:
+                    res.append(item)
+        if not res:
+            return 0
         return statistics.mean(res)
 
 
 if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+
     a = Student('Hf', 'Fdx', 'Wef')
     print(a.subjects_grades)
     print(a.subjects_tests)
@@ -128,7 +171,7 @@ if __name__ == '__main__':
     a.add_taste('chemistry', 100)
     a.add_taste('chemistry', 51)
     a.add_grade('math', 3)
-    a.add_grade('physics', 0)
+    a.add_grade('physics', 2)
     print(a.average_test('chemistry'))
     print(a.average_grades())
     print(a.subjects_grades)
